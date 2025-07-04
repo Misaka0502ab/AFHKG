@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <head>
+    <!-- 标准ICO格式 -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- 如果有多尺寸PNG图标 -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    
+    <!-- Apple设备专用 -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
+    <!-- 网页主题色（可选） -->
+    <meta name="theme-color" content="#ffffff">
+    </head>
+    <title>香港空运报价</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header img {
+            height: 60px;
+            margin-bottom: 10px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 28px;
+        }
+        .header p {
+            color: #7f8c8d;
+            margin: 5px 0;
+        }
+        .form-container {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .form-row {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        .form-label {
+            width: 200px;
+            font-weight: bold;
+            text-align: right;
+            padding-right: 15px;
+            color: #34495e;
+        }
+        .form-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .unit {
+            margin-left: 10px;
+            color: #7f8c8d;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        .section-title {
+            font-weight: bold;
+            color: #3498db;
+            margin: 25px 0 15px 0;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        button {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            width: 100%;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        #preview {
+            background: white;
+            padding: 30px;
+            margin-top: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        .preview-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .preview-header h2 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 24px;
+        }
+        .preview-row {
+            display: flex;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .preview-label {
+            width: 220px;
+            font-weight: bold;
+            text-align: right;
+            padding-right: 15px;
+            color: #34495e;
+        }
+        .preview-value {
+            flex: 1;
+            color: #2c3e50;
+        }
+        .total-row {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px dashed #ddd;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .signature-area {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature-box {
+            width: 200px;
+            border-top: 1px solid #000;
+            text-align: center;
+            padding-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="header">
+            <h1>空运报价单生成系统</h1>
+            <p>填写以下信息生成专业报价单</p>
+        </div>
+        
+        <div class="form-row">
+            <label class="form-label">Carrier:</label>
+            <input type="text" id="carrier" class="form-input" placeholder="航空公司">
+        </div>
+        
+        <div class="form-row">
+            <label class="form-label">Route:</label>
+            <input type="text" id="route" class="form-input" placeholder="航线 (如 HKG-PVG)">
+        </div>
+        
+        <div class="form-row">
+            <label class="form-label">T/T:</label>
+            <input type="text" id="transit-time" class="form-input" placeholder="天数">
+            <span class="unit">day</span>
+        </div>
+        
+        <div class="form-row">
+            <label class="form-label">A/F:</label>
+            <input type="number" id="air-freight" class="form-input" placeholder="空运价格">
+            <span class="unit">USD /KG (inclusive of MYC & ISS)</span>
+        </div>
+        
+        <div class="form-row">
+            <label class="form-label">FRQ:</label>
+            <input type="text" id="frequency" class="form-input" value="Daily">
+        </div>
+        
+        <div class="form-row">
+            <label class="form-label">Validity:</label>
+            <input type="text" id="validity" class="form-input" value="1 Week">
+        </div>
+        
+        <div class="section-title">Local Charges</div>
+        
+        <div class="form-row">
+            <label class="form-label">Custom clearance:</label>
+            <input type="number" id="custom-clearance" class="form-input" value="33">
+            <span class="unit">USD /BL</span>
+        </div>
+        
+        <div class="form-row">
+            <label class="form-label">Handling charge:</label>
+            <input type="number" id="handling-charge" class="form-input" value="30">
+            <span class="unit">USD /BL</span>
+        </div>
+        
+        <div class="form-row">
+            <label class="form-label">Airline doc&ENS:</label>
+            <input type="number" id="doc-fee" class="form-input" value="17">
+            <span class="unit">USD /BL</span>
+        </div>
+        
+        <div class="form-row">
+            <label class="form-label">Terminal charge:</label>
+            <input type="number" id="terminal-charge" class="form-input" step="0.01" value="0.23">
+            <span class="unit">USD /KG, MIN USD</span>
+            <input type="number" id="terminal-min" class="form-input small-input" value="23">
+            <span class="unit">/BL</span>
+        </div>
+        
+        <div class="form-row">
+            <label class="form-label">X-ray charge:</label>
+            <input type="number" id="xray-charge" class="form-input" step="0.01" value="0.10">
+            <span class="unit">USD /KG, MIN USD</span>
+            <input type="number" id="xray-min" class="form-input small-input" value="21">
+            <span class="unit">/BL</span>
+        </div>
+        
+        <div class="form-row">
+            <label class="form-label">Truck fee:</label>
+            <input type="number" id="truck-fee" class="form-input" placeholder="费用">
+            <span class="unit">USD /BL</span>
+            <input type="text" id="truck-days" class="form-input" placeholder="天数" style="width:80px; margin-left:10px;">
+            <span class="unit">days</span>
+        </div>
+        
+        <div class="form-row">
+            <label class="form-label">Cargo Weight (KG):</label>
+            <input type="number" id="cargo-weight" class="form-input" placeholder="货物重量" value="100">
+            <span class="unit">KG</span>
+        </div>
+        
+        <button onclick="generatePDF()">生成专业报价单 PDF</button>
+    </div>
+
+    <!-- 预览区域 -->
+    <div id="preview">
+        <div class="preview-header">
+            
+        
+        </div>
+        
+        <div class="section-title">Solution details</div>
+
+        <div class="preview-row">
+            <div class="preview-label">Carrier:</div>
+            <div class="preview-value" id="preview-carrier"></div>
+        </div>
+        
+        <div class="preview-row">
+            <div class="preview-label">Route:</div>
+            <div class="preview-value" id="preview-route"></div>
+        </div>
+        
+        <div class="preview-row">
+            <div class="preview-label">T/T:</div>
+            <div class="preview-value" id="preview-transit-time"></div>
+        </div>
+        
+        <div class="preview-row">
+            <div class="preview-label">A/F:</div>
+            <div class="preview-value" id="preview-air-freight"></div>
+        </div>
+        
+        <div class="preview-row">
+            <div class="preview-label">FRQ:</div>
+            <div class="preview-value" id="preview-frequency"></div>
+        </div>
+        
+        <div class="preview-row">
+            <div class="preview-label">Validity:</div>
+            <div class="preview-value" id="preview-validity"></div>
+        </div>
+        
+        <div class="section-title">Local Charges</div>
+        
+        <div class="preview-row">
+            <div class="preview-label">Custom clearance:</div>
+            <div class="preview-value" id="preview-custom-clearance"></div>
+        </div>
+        
+        <div class="preview-row">
+            <div class="preview-label">Handling charge:</div>
+            <div class="preview-value" id="preview-handling-charge"></div>
+        </div>
+        
+        <div class="preview-row">
+            <div class="preview-label">Airline doc&ENS:</div>
+            <div class="preview-value" id="preview-doc-fee"></div>
+        </div>
+        
+        <div class="preview-row">
+            <div class="preview-label">Terminal charge:</div>
+            <div class="preview-value" id="preview-terminal-charge"></div>
+        </div>
+        
+        <div class="preview-row">
+            <div class="preview-label">X-ray charge:</div>
+            <div class="preview-value" id="preview-xray-charge"></div>
+        </div>
+
+        <div class="preview-row">
+            <div class="preview-label">Truck fee:</div>
+            <div class="preview-value" id="preview-truck-fee"></div>
+        </div>
+        
+        <div class="preview-row total-row">
+            <div class="preview-label">Total Estimated Cost:</div>
+            <div class="preview-value" id="preview-total-cost"></div>
+        </div>
+        
+      
+    </div>
+
+    <script>
+        function generatePDF() {
+            // 获取所有数据
+            const data = {
+                carrier: document.getElementById('carrier').value,
+                route: document.getElementById('route').value,
+                transitTime: document.getElementById('transit-time').value,
+                airFreight: parseFloat(document.getElementById('air-freight').value) || 0,
+                frequency: document.getElementById('frequency').value,
+                validity: document.getElementById('validity').value,
+                customClearance: parseFloat(document.getElementById('custom-clearance').value) || 0,
+                handlingCharge: parseFloat(document.getElementById('handling-charge').value) || 0,
+                docFee: parseFloat(document.getElementById('doc-fee').value) || 0,
+                terminalCharge: parseFloat(document.getElementById('terminal-charge').value) || 0,
+                xrayCharge: parseFloat(document.getElementById('xray-charge').value) || 0,
+                xrayMin: parseFloat(document.getElementById('xray-min').value) || 0,
+                truckFee: parseFloat(document.getElementById('truck-fee').value) || 0,
+                truckDays: document.getElementById('truck-days').value,
+                cargoWeight: parseFloat(document.getElementById('cargo-weight').value) || 0
+            };
+
+            // 计算总价
+            const terminalCost = Math.max(data.terminalCharge * data.cargoWeight, 23);
+            const xrayCost = Math.max(data.xrayCharge * data.cargoWeight, data.xrayMin);
+            const totalCost = 
+                data.airFreight * data.cargoWeight + 
+                data.customClearance + 
+                data.handlingCharge + 
+                data.docFee + 
+                terminalCost + 
+                xrayCost +  // 新增X-ray费用
+                data.truckFee;
+
+            // 更新预览内容
+            document.getElementById('preview-carrier').textContent = data.carrier;
+            document.getElementById('preview-route').textContent = data.route;
+            document.getElementById('preview-transit-time').textContent = data.transitTime + " day";
+            document.getElementById('preview-air-freight').textContent = data.airFreight.toFixed(2) + " USD /KG (inclusive of MYC & ISS)";
+            document.getElementById('preview-frequency').textContent = data.frequency;
+            document.getElementById('preview-validity').textContent = data.validity;
+            document.getElementById('preview-custom-clearance').textContent = data.customClearance.toFixed(2) + " USD /BL";
+            document.getElementById('preview-handling-charge').textContent = data.handlingCharge.toFixed(2) + " USD /BL";
+            document.getElementById('preview-doc-fee').textContent = data.docFee.toFixed(2) + " USD /BL";
+            document.getElementById('preview-terminal-charge').textContent = 
+                data.terminalCharge.toFixed(2) + " USD /KG (" + terminalCost.toFixed(2) + " USD for " + data.cargoWeight + "KG)";
+            document.getElementById('preview-xray-charge').textContent = 
+                data.xrayCharge.toFixed(2) + " USD /KG (" + xrayCost.toFixed(2) + " USD for " + data.cargoWeight + "KG)";
+                document.getElementById('preview-truck-fee').textContent = 
+                data.truckFee ? (data.truckFee.toFixed(2) + " USD /BL (" + data.truckDays + " days)") : "N/A";
+            document.getElementById('preview-total-cost').textContent = totalCost.toFixed(2) + " USD";
+
+
+            // 生成PDF配置
+            const element = document.getElementById('preview');
+            const opt = {
+                margin: [15, 15],
+                filename: `AirFreight_Quote_${data.carrier}_${data.route.replace(/\s+/g, '_')}.pdf`,
+                html2canvas: { 
+                    scale: 2,
+                    logging: true,
+                    useCORS: true,
+                    scrollY: 0
+                },
+                jsPDF: { 
+                    unit: 'mm', 
+                    format: 'a4', 
+                    orientation: 'portrait',
+                    hotfixes: ["px_scaling"] 
+                }
+            };
+
+            // 临时显示确保渲染完整
+            const originalDisplay = element.style.display;
+            element.style.display = 'block';
+            
+            // 生成PDF
+            html2pdf()
+                .set(opt)
+                .from(element)
+                .save()
+                .then(() => {
+                    element.style.display = originalDisplay;
+                });
+        }
+    </script>
+</body>
+</html>
